@@ -25,6 +25,7 @@ gem 'jquery-datatables-rails'
 gem 'roo-xls'
 gem 'ajax-datatables-rails'
 gem 'figaro'
+gem "nested_form"
 # this will convert total amount to words
 gem 'to_words'
 # Use postgresql as the database for Active Record

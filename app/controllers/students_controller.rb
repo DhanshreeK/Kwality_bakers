@@ -61,8 +61,8 @@ class StudentsController < ApplicationController
 
   def student_status
     @student = Student.find(params[:id])
-      @general_setting = GeneralSetting.first
-      @user = User.first
+    @general_setting = GeneralSetting.first
+    @user = User.first
   end
 
 

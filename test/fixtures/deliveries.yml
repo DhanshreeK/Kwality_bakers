@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_no: MyString
+  date: MyString
+  bill_checked_by: MyString
+  vendor: one
+
+two:
+  invoice_no: MyString
+  date: MyString
+  bill_checked_by: MyString
+  vendor: two
