@@ -15,4 +15,5 @@
 //= require jquery-ui
 //= require rails-ujs
 //= require bootstrap-select
+//= require jquery_nested_form
 //= require dataTables/jquery.dataTables

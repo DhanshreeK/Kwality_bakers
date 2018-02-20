@@ -1,0 +1,104 @@
+<div class="col-md-12"> 
+ <br>
+                 <br>
+          <div class="panel panel-info">
+            <div class="panel-heading clearfix"> 
+              <div class="panel-title">Delivery Details</div> 
+              <ul class="panel-tool-options"> 
+               <!--  <li class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><i class="icon-cog"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#"><i class="icon-arrows-ccw"></i> Update data</a></li>
+                    <li><a href="#"><i class="icon-list"></i> Detailed log</a></li>
+                    <li><a href="#"><i class="icon-chart-pie"></i> Statistics</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="icon-cancel"></i> Clear list</a></li>
+                  </ul>
+                 </li> -->
+                <li><a data-rel="collapse" href="#"><i class="icon-down-open"></i></a></li>
+<!--                 <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li>
+ -->                <li><a data-rel="close" href="#"><i class="icon-cancel"></i></a></li>
+              </ul>  
+            </div> 
+            <!-- panel body --> 
+ <div class="panel-body">
+
+<p id="notice"><%= notice %></p>
+
+<div class="col-md-4">
+<p class="text-info">
+  <strong>Invoice no:</strong>
+  <%= @delivery.invoice_no %>
+</p>
+</div>
+
+<div class="col-md-4">
+<p class="text-info">
+  <strong>Date:</strong>
+  <%= @delivery.date %>
+</p>
+</div>
+
+<div class="col-md-4">
+<p class="text-info">
+  <strong>Vendor:</strong>
+  <%= @delivery.vendor.name %>
+</p>
+</div>
+
+<div class="col-md-4">
+<p class="text-info">
+  <strong>Bill checked by:</strong>
+  <%= @delivery.bill_checked_by %>
+</p>
+</div>
+
+<div class="col-md-4">
+<p class="text-info">
+  <strong>Comission(%):</strong>
+  <%= @delivery.vendor.comission %>
+</p>
+</div>
+
+     <table class="table">
+				  <thead>
+				    <tr>
+				      <th>Name</th>
+				      <th>Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+
+				    </tr>
+				  </thead>
+				  <%total=0%>
+          <%substraction=0%>
+          <%comission=0%>
+				  <tbody>
+				    <% @delivery.delivery_items.each do |product| %>
+				      <tr>
+				        <td><%=product.inward_module.product.name %></td>
+				        <td><%=product.inward_module.product.price %></td>
+                <td><%=product.qty %></td>
+                <td><%=product.total_amt %></td>
+				        <%total += product.inward_module.product.price.to_i %>
+                 <%substraction = product.inward_module.quantity.to_i - product.qty.to_i %>
+                 <%comission = (total.to_i*@delivery.vendor.comission.to_i)/100%>
+                <%= product.inward_module.update!(quantity: substraction)%>
+				      </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+			Total: <%=total%><br>
+      Comission:  <%=comission%>
+			<%@delivery.update(total: total, cal_comission: comission)%>
+			</div>
+<%= link_to 'Edit', edit_delivery_path(@delivery) , class: 'btn btn-red btn-outline'%> |
+<%= link_to 'Back', deliveries_path , class: 'btn btn-blue btn-outline'%>
+</div>
+</div>
+</div>
+</div>
+
+
+
+

@@ -1,0 +1,95 @@
+<div class="row"> 
+                <div class="col-md-12">
+                 <br>
+                 <br>
+                    <div class="panel panel-info">
+                        <div class="panel-heading clearfix"> 
+                            <div class="panel-title">Vendor Details</div> 
+                            <ul class="panel-tool-options"> 
+                               <!--  <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><i class="icon-cog"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#"><i class="icon-arrows-ccw"></i> Update data</a></li>
+                                        <li><a href="#"><i class="icon-list"></i> Detailed log</a></li>
+                                        <li><a href="#"><i class="icon-chart-pie"></i> Statistics</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="icon-cancel"></i> Clear list</a></li>
+                                    </ul>
+                                 </li> -->
+                                <li><a data-rel="collapse" href="#"><i class="icon-down-open"></i></a></li>
+                                <!-- <li><a data-rel="reload" href="#"><i class="icon-arrows-ccw"></i></a></li> -->
+                                <li><a data-rel="close" href="#"><i class="icon-cancel"></i></a></li>
+                            </ul> 
+                        </div> 
+                        <br>
+                       
+<div class="panel-body">
+<%= form_with(model: vendor, local: true) do |form| %>
+  <% if vendor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vendor.errors.count, "error") %> prohibited this vendor from being saved:</h2>
+
+      <ul>
+      <% vendor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Vendor Name</label>
+    <%= form.text_field :name, id: :vendor_name , class: 'form-control'%>
+  </div>
+  </div>
+
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Address</label>
+    <%= form.text_field :address, id: :vendor_address , class: 'form-control' %>
+  </div>
+</div>
+
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Delivery Area</label>
+    <%= form.text_field :delivery_area, id: :vendor_delivery_area , class: 'form-control' %>
+  </div>
+  </div>
+
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">GST No</label>
+    <%= form.text_field :gst_no, id: :vendor_gst_no  , class: 'form-control'%>
+  </div>
+  </div>
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Pan No</label>
+    <%= form.text_field :pan_no, id: :vendor_pan_no , class: 'form-control' %>
+  </div>
+  </div>
+
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Phone No</label>
+    <%= form.text_field :phone_no, id: :vendor_phone_no , class: 'form-control' %>
+  </div>
+  </div>
+
+  <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-6 control-label">Comission(%)</label>
+    <%= form.text_field :comission, id: :vendor_comission  , class: 'form-control'%>
+  </div>
+
+ <div class="form-group"> 
+     <div class="col-sm-offset-1 col-sm-10">  
+       <%= form.submit "Submit", class: 'btn btn-success' %>
+       <%= link_to 'Back', vendors_path, class: 'btn btn-red' %>
+    </div>
+</div>
+ 
+<% end %>
+</div>
+</div></div></div>

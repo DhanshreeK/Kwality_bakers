@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202122029) do
+ActiveRecord::Schema.define(version: 20180220052858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,17 @@ ActiveRecord::Schema.define(version: 20180202122029) do
     t.index ["email_setting_id"], name: "index_centers_on_email_setting_id"
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "fssai_lic_no"
+    t.string "contact_no"
+    t.string "email"
+    t.string "gst_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "course_types", force: :cascade do |t|
     t.string "course_type_name"
     t.datetime "created_at", null: false
@@ -73,6 +84,32 @@ ActiveRecord::Schema.define(version: 20180202122029) do
     t.integer "center_id"
     t.index ["course_type_id"], name: "index_courses_on_course_type_id"
     t.index ["university_id"], name: "index_courses_on_university_id"
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.string "invoice_no"
+    t.string "date"
+    t.string "bill_checked_by"
+    t.bigint "vendor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "total"
+    t.string "cal_comission"
+    t.index ["vendor_id"], name: "index_deliveries_on_vendor_id"
+  end
+
+  create_table "delivery_items", force: :cascade do |t|
+    t.bigint "delivery_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "inward_module_id"
+    t.string "quantity"
+    t.string "qty"
+    t.string "total_amt"
+    t.index ["delivery_id"], name: "index_delivery_items_on_delivery_id"
+    t.index ["inward_module_id"], name: "index_delivery_items_on_inward_module_id"
+    t.index ["product_id"], name: "index_delivery_items_on_product_id"
   end
 
   create_table "email_settings", force: :cascade do |t|
@@ -152,6 +189,16 @@ ActiveRecord::Schema.define(version: 20180202122029) do
     t.datetime "logo_updated_at"
   end
 
+  create_table "inward_modules", force: :cascade do |t|
+    t.date "date"
+    t.string "inward_number"
+    t.string "quantity"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_inward_modules_on_product_id"
+  end
+
   create_table "pending_payments", force: :cascade do |t|
     t.bigint "student_id"
     t.bigint "receipt_id"
@@ -162,6 +209,15 @@ ActiveRecord::Schema.define(version: 20180202122029) do
     t.string "fees_paid"
     t.index ["receipt_id"], name: "index_pending_payments_on_receipt_id"
     t.index ["student_id"], name: "index_pending_payments_on_student_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "price"
+    t.string "total"
+    t.string "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "receipts", force: :cascade do |t|
@@ -350,9 +406,25 @@ ActiveRecord::Schema.define(version: 20180202122029) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vendors", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "delivery_area"
+    t.string "gst_no"
+    t.string "pan_no"
+    t.string "phone_no"
+    t.string "comission"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "centers", "email_settings"
   add_foreign_key "courses", "course_types"
   add_foreign_key "courses", "universities"
+  add_foreign_key "deliveries", "vendors"
+  add_foreign_key "delivery_items", "deliveries"
+  add_foreign_key "delivery_items", "inward_modules"
+  add_foreign_key "delivery_items", "products"
   add_foreign_key "email_settings", "centers"
   add_foreign_key "email_settings", "students"
   add_foreign_key "employees", "centers"
@@ -362,6 +434,7 @@ ActiveRecord::Schema.define(version: 20180202122029) do
   add_foreign_key "enquiries", "refarences"
   add_foreign_key "envelopes", "centers"
   add_foreign_key "envelopes", "students"
+  add_foreign_key "inward_modules", "products"
   add_foreign_key "pending_payments", "receipts"
   add_foreign_key "pending_payments", "students"
   add_foreign_key "receipts", "centers"

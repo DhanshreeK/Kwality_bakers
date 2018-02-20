@@ -20,7 +20,6 @@
                 <th>Name</th>
                 <th>Designation</th>
                 <th>Employee no</th>
-                <th>Status</th>
                <th></th>
                <th></th>
              </tr>
@@ -32,12 +31,6 @@
             <td><%= employee.name %></td>
             <td><%= employee.designation %></td>
             <td><%= employee.employee_no %></td>
-                <%if employee.employee_status == "Inactive" %>
-                 <td><%=link_to 'Deactivate', employees_path(:param1 => false, :id => employee.id),style: 'color: red'%></td>
-                   <%elsif employee.employee_status == "Active" %>
-                  <td><%=link_to 'Activate', employees_path(:param1 => true, :id => employee.id),style: 'color: green'%></td>
-              <%end%>
-
             <td><%= link_to 'Show', employee,class: "btn btn-blue btn-sm" %></td>
             <td><%= link_to 'Edit', edit_employee_path(employee),class: "btn btn-success btn-sm" %></td></i>
             </tr>

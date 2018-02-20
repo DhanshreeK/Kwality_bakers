@@ -13,104 +13,47 @@
 <!-- Mouldifi core stylesheet -->
 <link href="/assets/mouldifi-core.css" rel="stylesheet">
 <!-- /mouldifi core stylesheet -->
-
+<link href="/assets/bootstrap-select.scss" rel="stylesheet">
 <link href="/assets/mouldifi-forms.css" rel="stylesheet">
-<link href="/assets/bootstrap-select.css" rel="stylesheet">
-<link href="/assets/plugins/datatables/jquery.dataTables.css" rel="stylesheet">
+<!-- <link href="/assets/bootstrap-select.css" rel="stylesheet">
+ -->
 
 <!-- Page container -->
 <div class="page-container">
 
 	<!-- Page Sidebar -->
-	<div class="page-sidebar">
+	  	<div class="page-sidebar">
+		
 		<!-- Site header  -->
 		<header class="site-header">
-		  <div class="site-logo">
-		      <% unless @general_setting.blank? %>
-		     <%= image_tag @general_setting.logo.url %>
-		     <%else%>
-		     <%=GeneralSetting.first.logo.url%>
-		  <%end%>
-		</div>
+		  <div class="site-logo"><a href="#"><img src="/assets/kwq.png" alt="Kwality Bakers" title="Kwality Bakers"></a></div>
 		  <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
+		  <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
+		</header>
+		<!-- /site header -->
+
 		  <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
 		</header>
 		<!-- /site header -->
 		
 		<!-- Main navigation -->
 		<ul id="side-nav" class="main-menu navbar-collapse collapse">
-			<li class="has-sub"><a href="/home/dashboard"><i class="icon-gauge"></i><span class="title">Misc.</span></a>
+			<li class="has-sub"><a href="/home/index"><i class="icon-gauge"></i><span class="title">Misc.</span></a>
 				<ul class="nav">
-					<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Employee' && current_user.employee.employee_status == 'Active') || (current_user.role == 'Center' && current_user.center.center_status == 'Active')%>
-
-				<%if current_user.center.present?%>
-					<li><a href="/centers/update_center"><span class="title">Centers</span></a></li>
-					<%elsif current_user.role == 'SuperAdmin' %>
-					<li><a href="/centers"><span class="title">Centers</span></a></li>
-				<%end%>
-				<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Center' && current_user.center.center_status == 'Active') %>
+					<li><a href="/companies"><span class="title">Company</span></a></li>
 					<li><a href="/employees"><span class="title">Employees</span></a></li>
-					<li><a href="/refarences"><span class="title">Add Referenced By</span></a></li>
-					<li><a href="/caste_categories"><span class="title">Categories</span></a></li>
-
-				<%end%>
-				<%if current_user.role == 'SuperAdmin' %>
-
-					<li><a href="/universities"><span class="title">University</span></a></li>
-					<li><a href="/course_types"><span class="title">Course Type</span></a></li>
-					<li><a href="/courses"><span class="title">Course</span></a></li>
-			    <%end%>
-					<li><a href="/enquiries"><span class="title">Enquiries</span></a></li>
-					
-					<li><a href="/envelopes"><span class="title">Envelope Creation</span></a></li>
-					<li><a href="/receipts/receipt_creation"><span class="title">Generate Receipt</span></a></li>
-
-					<%elsif current_user.role == 'SuperAdmin'%>
-					<li><a href="/general_settings/new"><span class="title">General Setting</span></a></li>
-					<%end%>
+					<li><a href="/products"><span class="title">Products</span></a></li>
+					<li><a href="/vendors"><span class="title">Vendors</span></a></li>
 				</ul>
 			</li>
-
-		
-			<li class="has-sub"><a href="#"><i class="icon-layout"></i><span class="title">Students</span></a>
+			
+			<li class="has-sub"><a href="form-basic.html"><i class="icon-doc-text"></i><span class="title">Delivery Module</span></a>
 				<ul class="nav collapse">
-					<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Employee' && current_user.employee.employee_status == 'Active') || (current_user.role == 'Center' && current_user.center.center_status == 'Active')%>
-					<%if current_user.student.present?%>
-					<li><a href="/students/new"><span class="title">Student Admission</span></a></li>
-					<%end%>
-					<%unless current_user.student.blank?%>
-					<li><a href="/students"><span class="title">Student Detail</span></a></li>
-					<%end%>
-					<%end%>
-					<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Employee' && current_user.employee.employee_status == 'Active') || (current_user.role == 'Center' && current_user.center.center_status == 'Active')%>
-					<li><a href="/students/view_all"><span class="title">Students</span></a></li>
-					<%end%>
+					<li><a href="/deliveries"><span class="title">Delivery</span></a></li>
+					<li><a href="/inward_modules"><span class="title">Inward Modules</span></a></li>
 				</ul>
 			</li>
-		
-			<li class="has-sub"><a href="#"><i class="icon-doc-text"></i><span class="title">Sms/Email Settings</span></a>
-				<ul class="nav collapse">
-				<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Center' && current_user.center.center_status == 'Active') %>
-					<li><a href="/sms_settings/new"><span class="title">Sms Settings</span></a></li>
-					<li><a href="/email_settings/new"><span class="title">Email Settings</span></a></li>
-					<li><a href="/bulk_sms_settings/new"><span class="title">Bulk Sms Settings</span></a></li>
-				</ul>
-			</li>
-		<%end%>
-
-
-			<li class="has-sub"><a href="#"><i class="icon-list"></i><span class="title">Reports</span></a>
-				<ul class="nav collapse">
-
-		<%if current_user.role == 'SuperAdmin' || (current_user.role == 'Center' && current_user.center.center_status == 'Active') %>
-					<li><a href="/reports/general_report"><span class="title">Center Report</span></a></li>
-					<li><a href="/reports/new"><span class="title">Daily Report/Monthly Report</span></a></li>
-					<!-- <li><a href="/reports/reference_report"><span class="title">Reference Report</span></a></li> -->
-					<li><a href="/reports/university_report"><span class="title">University Report</span></a></li>
-					<li><a href="/reports/course_report"><span class="title">Course Report</span></a></li>
-				</ul>
-			</li>
-		<%end%>		
+			
   </div>
   <!-- /page sidebar -->
   
@@ -123,19 +66,13 @@
 		  
 			<!-- User info -->
 			<ul class="user-info pull-left">          
-			  <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"> <img width="44" class="img-circle avatar" alt=""  <% if current_user.role == 'SuperAdmin' || current_user.role == 'Employee' || (current_user.role == 'Center' && current_user.center.center_status == 'Active') %>
-                <%= image_tag current_user.photo %>
-               <% elsif  current_user.role == 'Center' %>
-               <%= image_tag('man-3.jpg')%> 
-                <% end %>
-                <%= current_user.role%> <span class="caret"></span></a>
+			  <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"> <img width="44" class="img-circle avatar" alt="" src="man-3.jpg" >
+              <span class="caret"></span></a>
 			  
 				<!-- User action menu -->
 				<ul class="dropdown-menu">
-				   <% if current_user.role == 'SuperAdmin'%>
-				  <li><a href="/users/1"><i class="icon-user"></i>My profile</a></li>
-				  <li><a href="/general_settings/new"><i class="icon-cog"></i>Account settings</a></li>
-				  <%end%>
+				  <li><a href="#"><i class="icon-user"></i>My profile</a></li>
+				  <li><a href="#"><i class="icon-cog"></i>Account settings</a></li>
 				  <li><a href="#/"><i class="icon-mail"></i>Messages</a></li>
 				  <li><a href="#"><i class="icon-clipboard"></i>Tasks</a></li>
 				  <li class="divider"></li>
@@ -163,6 +100,8 @@
 <script src="/assets/plugins/flot/jquery.flot.pie.min.js"></script>
 <script src="/assets/plugins/flot/jquery.flot.time.min.js"></script>
 <script src="/assets/functions.js"></script>
+<script src="/assets/nested_form.js"></script>
+
 
 <!--ChartJs-->
 <script src="/assets/plugins/chartjs/Chart.min.js"></script>
