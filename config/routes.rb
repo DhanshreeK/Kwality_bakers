@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :return_modules
   resources :deliveries
   resources :inward_modules do
        collection do
@@ -17,6 +18,14 @@ Rails.application.routes.draw do
       get :load_vendor_data
     end
   end
+
+  resources :vendor_reports do 
+    collection do
+      get :select_vendor
+      get :view_vendor
+    end
+  end
+  
   resources :companies
   devise_for :users
   as :user do

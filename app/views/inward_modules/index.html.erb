@@ -27,6 +27,7 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -37,6 +38,9 @@
         <td><%= inward_module.inward_number %></td>
         <td><%= inward_module.product.name %></td>
         <td><%= inward_module.quantity %></td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-1" id="inward.product.id" >Add Quantity</button>
+</td>
+
         <td><%= link_to 'Show', inward_module %></td>
         <td><%= link_to 'Edit', edit_inward_module_path(inward_module) %></td>
         <td><%= link_to 'Destroy', inward_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -51,6 +55,114 @@
 </div>
 </div>
 </div>
+
+
+
+<!--Basic Modal-->
+<div id="modal-1" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Basic Modal</h4>
+      </div>
+      <div class="modal-body">
+
+<%= form_with(model: @inward_module, local: true) do |form| %>
+  <% if @inward_module.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inward_module.errors.count, "error") %> prohibited this @inward_module from being saved:</h2>
+
+      <ul>
+      <% @inward_module.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+   <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-10 control-label">Date</label>
+          <%= form.date_field :date, id: :inward_module_date, class: 'form-control' %>
+        </div>
+  </div>
+
+   <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-10 control-label">Inward Number</label>
+        <%= form.text_field :inward_number, id: :inward_module_inward_number, class: 'form-control' %>
+      </div>
+   </div>
+
+   <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-10 control-label">Select Product</label>
+  
+        <%= form.select :product_id, Product.all.collect{|p| [p.name, p.id]}, {prompt:true},class: "form-control selectpicker", "data-live-search" => "true" %>
+      </div>
+  </div>
+
+   <div class="form-group">
+        <div class="col-md-4">
+          <label class="col-sm-10 control-label">Quantity</label>
+        <%= form.text_field :quantity, id: :inward_module_quantity , class: 'form-control'%>
+      </div>
+  </div>
+
+<% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="test();">submit</button>
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--End Basic Modal-->
+
+
+
+  <script type="text/javascript">
+      function test(){
+      var a = $("#inward_module_date").val();
+      var b = $("#inward_module_inward_number").val();
+      var c = $("#product_id").val();
+      var d = $("#quantity").val();
+
+
+      var person = {inward_module:{
+      date: a,
+      inward_number: b,
+      product_id: c,
+      quantity: d
+            }
+        }
+
+        $.ajax({
+            url: '/inward_modules',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+            },
+            data: person
+        });
+
+        reload();
+
+    }
+
+    function reload(){
+      location.reload();
+    }
+   
+
+      
+
+    </script>
+
 
 <script>
   $(document).ready(function () {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220052858) do
+ActiveRecord::Schema.define(version: 20180221125407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,17 @@ ActiveRecord::Schema.define(version: 20180220052858) do
     t.index ["student_id"], name: "index_pending_payments_on_student_id"
   end
 
+  create_table "product_details", force: :cascade do |t|
+    t.bigint "inward_module_id"
+    t.string "date"
+    t.string "inward_number"
+    t.string "quantity"
+    t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inward_module_id"], name: "index_product_details_on_inward_module_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "price"
@@ -265,6 +276,20 @@ ActiveRecord::Schema.define(version: 20180220052858) do
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "return_modules", force: :cascade do |t|
+    t.string "date_of_return"
+    t.string "invoice_no"
+    t.bigint "vendor_id"
+    t.bigint "product_id"
+    t.string "quantity"
+    t.text "purpose"
+    t.string "receipt_no"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_return_modules_on_product_id"
+    t.index ["vendor_id"], name: "index_return_modules_on_vendor_id"
   end
 
   create_table "sms_settings", force: :cascade do |t|
@@ -437,8 +462,11 @@ ActiveRecord::Schema.define(version: 20180220052858) do
   add_foreign_key "inward_modules", "products"
   add_foreign_key "pending_payments", "receipts"
   add_foreign_key "pending_payments", "students"
+  add_foreign_key "product_details", "inward_modules"
   add_foreign_key "receipts", "centers"
   add_foreign_key "receipts", "students"
+  add_foreign_key "return_modules", "products"
+  add_foreign_key "return_modules", "vendors"
   add_foreign_key "students", "caste_categories"
   add_foreign_key "students", "centers"
   add_foreign_key "students", "course_types"

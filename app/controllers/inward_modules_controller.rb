@@ -5,6 +5,7 @@ class InwardModulesController < ApplicationController
   # GET /inward_modules.json
   def index
     @inward_modules = InwardModule.all
+    @inward_module = InwardModule.new
   end
 
   #load product on ajax call to fetch rate

@@ -80,7 +80,7 @@
 				        <td><%=product.inward_module.product.price %></td>
                 <td><%=product.qty %></td>
                 <td><%=product.total_amt %></td>
-				        <%total += product.inward_module.product.price.to_i %>
+				        <%total += product.total_amt.to_i %>
                  <%substraction = product.inward_module.quantity.to_i - product.qty.to_i %>
                  <%comission = (total.to_i*@delivery.vendor.comission.to_i)/100%>
                 <%= product.inward_module.update!(quantity: substraction)%>
